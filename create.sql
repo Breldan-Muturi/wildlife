@@ -1,13 +1,13 @@
 CREATE DATABASE wildlife;
 \c wildlife;
 
-CREATE TABLE IF NOT EXISTS animals(
+CREATE TABLE IF NOT EXISTS animal(
 id SERIAL PRIMARY KEY,
 animal_id INTEGER,
 animal_name VARCHAR
 );
 
-CREATE TABLE IF NOT EXISTS endangeredAnimals(
+CREATE TABLE IF NOT EXISTS endangeredAnimal(
 id SERIAL PRIMARY KEY,
 animal_id INTEGER,
 animal_name VARCHAR,
