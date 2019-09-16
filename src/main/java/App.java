@@ -102,77 +102,123 @@ public class App {
       return null;
     }, new HandlebarsTemplateEngine());
 
-    //get: delete an individual hero
-    get("/sightings/:sighting_id/heroes/:hero_id/delete", (req, res) -> {
-      int idOfHeroToDelete = Integer.parseInt(req.params("hero_id"));
-      heroDao.deleteById(idOfHeroToDelete);
+    //get: delete an individual animal
+    get("/sightings/:sighting_id/animals/:animal_id/delete", (req, res) -> {
+      int idOfAnimalToDelete = Integer.parseInt(req.params("animal_id"));
+      animalDao.deleteById(idOfAnimalToDelete);
       res.redirect("/");
       return null;
     }, new HandlebarsTemplateEngine());
 
-    //get: delete an individual hero
-    get("/sightings/:sighting_id/heroes/:hero_id/delete", (req, res) -> {
-      int idOfHeroToDelete = Integer.parseInt(req.params("hero_id"));
-      heroDao.deleteById(idOfHeroToDelete);
-      res.redirect("/");
-      return null;
-    }, new HandlebarsTemplateEngine());
-
-    //    get: add new heroes
-    get("/heroes/new",(req,res)->{
+    //    get: add new animals
+    get("/animals/new",(req,res)->{
       List<Sighting> sightings = sightingDao.getAll();
       model.put("sightings", sightings);
-      return new ModelAndView ( model, "hero-form.hbs");
+      return new ModelAndView ( model, "animal-form.hbs");
     },new HandlebarsTemplateEngine());
 
-    //    post: process new hero form
-    post("/heroes", (req, res) -> { //new
-      String name = req.queryParams("name");
-      int age = Integer.parseInt(req.queryParams("age"));
-      String origin_story = req.queryParams("origin_story");
-      String powers = req.queryParams("powers");
-      String weaknesses = req.queryParams("weaknesses");
+    //    post: process new animal form
+    post("/animals", (req, res) -> { //new
+      String animal_name = req.queryParams("animal_name");
       int sighting_id = Integer.parseInt(req.queryParams("sighting_id"));
-      Hero newHero = new Hero(name,age, origin_story, powers,weaknesses,sighting_id);
-      heroDao.add(newHero);
+      Animal newAnimal = new Animal(sighting_id, animal_name);
+      animalDao.add(newAnimal);
       List<Sighting> allSightings = sightingDao.getAll();
       model.put("sightings", allSightings);
       res.redirect("/");
       return null;
     }, new HandlebarsTemplateEngine());
 
-    //get: show an individual hero that is nested in a sighting
-    get("/sightings/:sighting_id/heroes/:hero_id", (req, res) -> {
-      int idOfHeroToFind = Integer.parseInt(req.params("hero_id")); //pull id - must match route segment
-      Hero foundHero = heroDao.findById(idOfHeroToFind); //use it to find hero
+    //get: show an individual animal that is nested in a sighting
+    get("/sightings/:sighting_id/animals/:animal_id", (req, res) -> {
+      int idOfAnimalToFind = Integer.parseInt(req.params("animal_id")); //pull id - must match route segment
+      Animal foundAnimal = animalDao.findById(idOfAnimalToFind); //use it to find hero
       int idOfSightingToFind = Integer.parseInt(req.params("sighting_id"));
       Sighting foundSighting = sightingDao.findById(idOfSightingToFind);
       model.put("sighting", foundSighting);
-      model.put("hero", foundHero); //add it to model for template to display
+      model.put("animal", foundAnimal); //add it to model for template to display
       model.put("sightings", sightingDao.getAll()); //refresh list of links for navbar
-      return new ModelAndView(model, "hero-detail.hbs"); //individual hero page.
+      return new ModelAndView(model, "animal-detail.hbs"); //individual hero page.
     }, new HandlebarsTemplateEngine());
 
-    //get: show a form to update a hero
-    get("/heroes/:id/edit", (req, res) -> {
+    //get: show a form to update a animal
+    get("/animals/:id/edit", (req, res) -> {
       List<Sighting> allSightings = sightingDao.getAll();
       model.put("sightings", allSightings);
-      Hero hero = heroDao.findById(Integer.parseInt(req.params("id")));
-      model.put("hero", hero);
-      model.put("editHero", true);
-      return new ModelAndView(model, "hero-form.hbs");
+      Animal animal = animalDao.findById(Integer.parseInt(req.params("id")));
+      model.put("animal", animal);
+      model.put("editAnimal", true);
+      return new ModelAndView(model, "animal-form.hbs");
     }, new HandlebarsTemplateEngine());
 
     //hero: process a form to update a hero
-    post("/heroes/:id", (req, res) -> { //URL to update hero on POST route
-      int heroToEditId = Integer.parseInt(req.params("id"));
-      String newName = req.queryParams("name");
-      int newAge = Integer.parseInt(req.queryParams("age"));
-      String newOrigin_story = req.queryParams("origin_story");
-      String newPowers = req.queryParams("powers");
-      String newWeaknesses = req.queryParams("weaknesses");
+    post("/animals/:id", (req, res) -> { //URL to update hero on POST route
+      int animalToEditId = Integer.parseInt(req.params("id"));
       int newSighting_id = Integer.parseInt(req.queryParams("sighting_id"));
-      heroDao.update(heroToEditId, newName, newAge, newOrigin_story, newPowers, newWeaknesses, newSighting_id);  // remember the hardcoded sightingId we placed? See what we've done to/with it?
+      String newAnimal_name = req.queryParams("animal_name");
+      animalDao.update(animalToEditId, newSighting_id, newAnimal_name);  // remember the hardcoded sightingId we placed? See what we've done to/with it?
+      res.redirect("/");
+      return null;
+    }, new HandlebarsTemplateEngine());
+
+    //get: delete an individual endangeredAnimal
+    get("/sightings/:sighting_id/endangeredAnimals/:endangeredAnimal_id/delete", (req, res) -> {
+      int idOfEndangeredAnimalToDelete = Integer.parseInt(req.params("endangeredAnimal_id"));
+      endangeredAnimalDao.deleteById(idOfEndangeredAnimalToDelete);
+      res.redirect("/");
+      return null;
+    }, new HandlebarsTemplateEngine());
+
+    //    get: add new endangeredAnimals
+    get("/endangeredAnimals/new",(req,res)->{
+      List<Sighting> sightings = sightingDao.getAll();
+      model.put("sightings", sightings);
+      return new ModelAndView ( model, "endangeredAnimal-form.hbs");
+    },new HandlebarsTemplateEngine());
+
+    //    post: process new endangeredAnimal form
+    post("/endangeredAnimals", (req, res) -> { //new
+      String animal_name = req.queryParams("animal_name");
+      String animal_health = req.queryParams("animal_health");
+      String animal_age = req.queryParams("animal_age");
+      EndangeredAnimal newEndangeredAnimal = new EndangeredAnimal(animal_name, animal_health,animal_age);
+      endangeredAnimalDao.add(newEndangeredAnimal);
+      List<Sighting> allSightings = sightingDao.getAll();
+      model.put("sightings", allSightings);
+      res.redirect("/");
+      return null;
+    }, new HandlebarsTemplateEngine());
+
+    //get: show an individual endangeredAnimal that is nested in a sighting
+    get("/sightings/:sighting_id/endangeredAnimals/:endangeredAnimal_id", (req, res) -> {
+      int idOfEndangeredAnimalToFind = Integer.parseInt(req.params("endangeredAnimal_id")); //pull id - must match route segment
+      EndangeredAnimal foundEndangeredAnimal = endangeredAnimalDao.findById(idOfEndangeredAnimalToFind); //use it to find hero
+      int idOfSightingToFind = Integer.parseInt(req.params("sighting_id"));
+      Sighting foundSighting = sightingDao.findById(idOfSightingToFind);
+      model.put("sighting", foundSighting);
+      model.put("endangeredAnimal", foundEndangeredAnimal); //add it to model for template to display
+      model.put("sightings", sightingDao.getAll()); //refresh list of links for navbar
+      return new ModelAndView(model, "endangeredAnimal-detail.hbs"); //individual hero page.
+    }, new HandlebarsTemplateEngine());
+
+    //get: show a form to update a endangeredAnimal
+    get("/endangeredAnimals/:id/edit", (req, res) -> {
+      List<Sighting> allSightings = sightingDao.getAll();
+      model.put("sightings", allSightings);
+      EndangeredAnimal endangeredAnimal = endangeredAnimalDao.findById(Integer.parseInt(req.params("id")));
+      model.put("endangeredAnimal", endangeredAnimal);
+      model.put("editEndangeredAnimal", true);
+      return new ModelAndView(model, "endangeredAnimal-form.hbs");
+    }, new HandlebarsTemplateEngine());
+
+    //hero: process a form to update a endangeredAnimal
+    post("/endangeredAnimals/:id", (req, res) -> { //URL to update hero on POST route
+      int endangeredAnimalToEditId = Integer.parseInt(req.params("id"));
+      String animal_name = req.queryParams("animal_name");
+      String animal_health = req.queryParams("animal_health");
+      String animal_age = req.queryParams("animal_age");
+      int sighting_id = Integer.parseInt(req.queryParams("sighting_id"));
+      endangeredAnimalDao.update(endangeredAnimalToEditId, animal_name, animal_health, animal_age, sighting_id);  // remember the hardcoded sightingId we placed? See what we've done to/with it?
       res.redirect("/");
       return null;
     }, new HandlebarsTemplateEngine());

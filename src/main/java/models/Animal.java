@@ -4,17 +4,12 @@ public class Animal {
   private int id;
   private int sighting_id;
   private String animal_name;
-  private String animal_health;
-  private String animal_age;
 
   public Animal(int sighting_id, String animal_name) {
     this.sighting_id = sighting_id;
     this.animal_name = animal_name;
   }
 
-  public static Animal setUpNewAnimal(){
-    return  new Animal(1, "Koala bear");
-  }
 
   public int getSighting_id() {
     return sighting_id;
@@ -30,22 +25,6 @@ public class Animal {
 
   public void setAnimal_name(String animal_name) {
     this.animal_name = animal_name;
-  }
-
-  public String getAnimal_health() {
-    return animal_health;
-  }
-
-  public void setAnimal_health(String animal_health) {
-    this.animal_health = animal_health;
-  }
-
-  public String getAnimal_age() {
-    return animal_age;
-  }
-
-  public void setAnimal_age(String animal_age) {
-    this.animal_age = animal_age;
   }
 
   public int getId() {

@@ -3,8 +3,8 @@ CREATE DATABASE wildlife;
 
 CREATE TABLE IF NOT EXISTS animals(
 id SERIAL PRIMARY KEY,
-animal_name VARCHAR,
 sighting_id INTEGER
+animal_name VARCHAR,
 );
 
 CREATE TABLE IF NOT EXISTS endangeredAnimals(

@@ -5,7 +5,6 @@ public class EndangeredAnimal {
     private String animal_name;
     private String animal_health;
     private String animal_age;
-    private int animal_id;
     private int sighting_id;
 
   public EndangeredAnimal(String animal_name, String animal_health, String animal_age) {
