@@ -12,7 +12,6 @@ public class EndangeredAnimal {
     this.animal_name = animal_name;
     this.animal_health = animal_health;
     this.animal_age = animal_age;
-    this.id = 1;
   }
 
   public int getId() {

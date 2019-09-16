@@ -1,29 +1,27 @@
 package models;
 
 public class Animal {
-  private int animal_id;
+  private int id;
   private int sighting_id;
   private String animal_name;
   private String animal_health;
   private String animal_age;
-  private int id;
 
-  public Animal(int animal_id, String animal_name) {
-    this.animal_id = animal_id;
+  public Animal(int sighting_id, String animal_name) {
+    this.sighting_id = sighting_id;
     this.animal_name = animal_name;
-    this.id = 0;
   }
 
   public static Animal setUpNewAnimal(){
     return  new Animal(1, "Koala bear");
   }
 
-  public int getAnimal_id() {
-    return animal_id;
+  public int getSighting_id() {
+    return sighting_id;
   }
 
-  public void setAnimal_id(int animal_id) {
-    this.animal_id = animal_id;
+  public void setSighting_id(int sighting_id) {
+    this.sighting_id = sighting_id;
   }
 
   public String getAnimal_name() {

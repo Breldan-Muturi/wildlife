@@ -17,7 +17,7 @@ public interface AnimalDao {
   List<EndangeredAnimal> getAllEndangeredAnimalsByAnimal(int animal_id);
 
   //UPDATE
-  void update(int animal_id, String animal_name, String animal_health, String animal_age, int id);
+  void update(int id, int sighting_id,String animal_name, String animal_health, String animal_age);
 
   //DELETE
   void deleteById(int id);

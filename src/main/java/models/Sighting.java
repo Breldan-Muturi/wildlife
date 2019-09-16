@@ -1,39 +1,23 @@
 package models;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Sighting {
+  private int id;
   private String animal_location;
   private String ranger_name;
-  private int animal_id;
-  private int sighting_id;
-  private int id;
-  private DateTimeFormatter time;
+  private LocalDateTime sightedAt;
 
-  public Sighting( int sightingId, int animalId, String location, String rangerName) {
-    this.sighting_id = sightingId;
+  public Sighting( String location, String rangerName) {
     this.animal_location = location;
     this.ranger_name = rangerName;
-    this.animal_id = animalId;
-    this.id = 0;
+    this.sightedAt = LocalDateTime.now();
   }
 
-  public int getSighting_id() {
-    return sighting_id;
-  }
+  public LocalDateTime getSightedAt() { return sightedAt; }
 
-  public void setSighting_id(int sighting_id) {
-    this.sighting_id = sighting_id;
-  }
-
-  public static Sighting setUpSighting(){
-    return new Sighting( 1,1, "Zone-A", "Cliff");
-  }
-
-  public String getAnimal_location() {
-    return animal_location;
-  }
+  public String getAnimal_location() { return animal_location; }
 
   public void setAnimal_location(String animal_location) {
     this.animal_location = animal_location;
@@ -45,14 +29,6 @@ public class Sighting {
 
   public void setRanger_name(String ranger_name) {
     this.ranger_name = ranger_name;
-  }
-
-  public int getAnimal_id() {
-    return animal_id;
-  }
-
-  public void setAnimal_id(int animal_id) {
-    this.animal_id = animal_id;
   }
 
   public int getId() {
@@ -68,16 +44,13 @@ public class Sighting {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Sighting sighting = (Sighting) o;
-    return animal_id == sighting.animal_id &&
-      sighting_id == sighting.sighting_id &&
-      id == sighting.id &&
+    return id == sighting.id &&
       Objects.equals(animal_location, sighting.animal_location) &&
-      Objects.equals(ranger_name, sighting.ranger_name) &&
-      Objects.equals(time, sighting.time);
+      Objects.equals(ranger_name, sighting.ranger_name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(animal_location, ranger_name, animal_id, sighting_id, id, time);
+    return Objects.hash(id, animal_location);
   }
 }

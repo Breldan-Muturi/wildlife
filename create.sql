@@ -1,23 +1,23 @@
 CREATE DATABASE wildlife;
 \c wildlife;
 
-CREATE TABLE IF NOT EXISTS animal(
+CREATE TABLE IF NOT EXISTS animals(
 id SERIAL PRIMARY KEY,
-animal_id INTEGER,
-animal_name VARCHAR
+animal_name VARCHAR,
+sighting_id INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS endangeredAnimal(
+CREATE TABLE IF NOT EXISTS endangeredAnimals(
 id SERIAL PRIMARY KEY,
-animal_id INTEGER,
 animal_name VARCHAR,
 animal_age VARCHAR,
-animal_health VARCHAR
+animal_health VARCHAR,
+animal_id INTEGER,
+sighting_id INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS sighting(
+CREATE TABLE IF NOT EXISTS sightings(
 id SERIAL PRIMARY KEY,
-animal_id INTEGER,
 animal_location VARCHAR,
 ranger_name VARCHAR,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

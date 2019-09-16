@@ -20,7 +20,7 @@ public interface SightingDao {
   List<EndangeredAnimal> getAllEndangeredAnimalsBySighting(int sighting_id);
 
   //UPDATE
-  void update(String animal_location, String ranger_name, int animal_id, int id, DateTimeFormatter time);
+  void update(int id, String animal_location, String ranger_name);
 
   //DELETE
   void deleteById(int id);
