@@ -7,15 +7,15 @@ public class Sighting {
   private int id;
   private String animal_location;
   private String ranger_name;
-  private LocalDateTime sightedAt;
+  private LocalDateTime sighted_at;
 
   public Sighting( String location, String rangerName) {
     this.animal_location = location;
     this.ranger_name = rangerName;
-    this.sightedAt = LocalDateTime.now();
+    this.sighted_at = LocalDateTime.now();
   }
 
-  public LocalDateTime getSightedAt() { return sightedAt; }
+  public LocalDateTime getSightedAt() { return sighted_at; }
 
   public String getAnimal_location() { return animal_location; }
 

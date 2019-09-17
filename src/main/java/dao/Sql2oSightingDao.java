@@ -7,7 +7,6 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Sql2oSightingDao implements SightingDao {
@@ -26,7 +25,7 @@ public class Sql2oSightingDao implements SightingDao {
 
   @Override
   public void add(Sighting sighting) {
-    String sql = "INSERT INTO sightings (animal_location, ranger_name, created_at) VALUES (:animal_location, :ranger_name, :created_at)";
+    String sql = "INSERT INTO sightings (animal_location, ranger_name, sighted_at) VALUES (:animal_location, :ranger_name, :sighted_at)";
     try (Connection con = sql2o.open()) {
       int id = (int) con.createQuery(sql, true)
         .bind(sighting)

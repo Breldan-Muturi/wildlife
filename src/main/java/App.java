@@ -16,9 +16,17 @@ import static spark.Spark.*;
 import static spark.Spark.post;
 
 public class App {
+  static int getHerokuAssignedPort() {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    if (processBuilder.environment().get("PORT") != null) {
+      return Integer.parseInt(processBuilder.environment().get("PORT"));
+    }
+    return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+  }
   public static void main(String[] args) {
+    port(getHerokuAssignedPort());
     staticFileLocation("/public");
-    String connectionString = "jdbc:postgresql://localhost:5432/todolist";      //connect to todolist, not todolist_test!
+    String connectionString = "jdbc:postgresql://localhost:5432/wildlife";      //connect to todolist, not todolist_test!
     Sql2o sql2o = new Sql2o(connectionString, "turi", "Sunrise@1997");
     Sql2oEndangeredAnimalDao endangeredAnimalDao = new Sql2oEndangeredAnimalDao(sql2o);
     Sql2oAnimalDao animalDao = new Sql2oAnimalDao(sql2o);
@@ -34,6 +42,14 @@ public class App {
       List<EndangeredAnimal> allEndangeredAnimals = endangeredAnimalDao.getAll();
       model.put("endangeredAnimals", allEndangeredAnimals);
       return new ModelAndView(model, "index.hbs");
+    }, new HandlebarsTemplateEngine());
+
+    //get: delete an individual sighting
+    get("/sightings/:sighting_id/delete", (req, res) -> {
+      int idOfSightingToDelete = Integer.parseInt(req.params("sighting_id"));
+      sightingDao.deleteById(idOfSightingToDelete);
+      res.redirect("/");
+      return null;
     }, new HandlebarsTemplateEngine());
 
     //    get: add new sightings
@@ -62,9 +78,16 @@ public class App {
       return null;
     }, new HandlebarsTemplateEngine());
 
-    //get: delete all heroes
+    //get: delete all endangered animals
     get("/endangeredAnimals/delete", (req, res) -> {
       endangeredAnimalDao.clearAllEndangeredAnimals();
+      res.redirect("/");
+      return null;
+    }, new HandlebarsTemplateEngine());
+
+    //get: delete all animals
+    get("/animals/delete", (req, res) -> {
+      animalDao.clearAllAnimals();
       res.redirect("/");
       return null;
     }, new HandlebarsTemplateEngine());
